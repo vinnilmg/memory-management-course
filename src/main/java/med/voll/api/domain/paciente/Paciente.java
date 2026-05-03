@@ -1,15 +1,19 @@
 package med.voll.api.domain.paciente;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.domain.consulta.Consulta;
 import med.voll.api.domain.endereco.Endereco;
 
 import java.util.List;
-import java.util.Objects;
 
 @Table(name = "pacientes")
 @Entity(name = "Paciente")
@@ -17,23 +21,19 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Paciente {
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String email;
-
     private String telefone;
-
     private String cpf;
-
     @Embedded
     private Endereco endereco;
-
     private Boolean ativo;
-
     @Transient
     public List<Consulta> consultas;
+
     public Paciente(DadosCadastroPaciente dados) {
         this.ativo = true;
         this.nome = dados.nome();
@@ -60,7 +60,7 @@ public class Paciente {
         this.ativo = false;
     }
 
-    public List<Consulta> consultas(){
+    public List<Consulta> consultas() {
         return consultas();
     }
 }
